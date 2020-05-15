@@ -5,24 +5,24 @@ class CocktailsController < ApplicationController
 
   def show
     @cocktail = Cocktail.find(params[:id])
-    @dose = Dose.new
-    @review = Review.new
   end
-
+  
   def new
     @cocktail = Cocktail.new
   end
 
   def create
     @cocktail = Cocktail.new(cocktail_params)
+
     if @cocktail.save
-      redirect_to cocktail_path(@cocktail)
+      redirect_to @cocktail, notice: 'cocktail was successfully created.'
     else
-      render 'new'
+      render :new
     end
+    # no need for app/views/cocktails/create.html.erb
   end
 
-  private
+  private 
 
   def cocktail_params
     params.require(:cocktail).permit(:name)
